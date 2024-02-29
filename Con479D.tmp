@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://cic07esowkumm"]
+
+[ext_resource type="Script" path="res://Control.gd" id="1"]
+[ext_resource type="PackedScene" uid="uid://cl351fkdp388r" path="res://Prefabs/balloon.tscn" id="2_5dc4q"]
+[ext_resource type="Texture2D" uid="uid://crjya6yo4bnx5" path="res://sprites/pointer.png" id="4_u8o5s"]
+[ext_resource type="Script" path="res://Pointer.gd" id="5_2yexb"]
+[ext_resource type="Script" path="res://Spawner.gd" id="5_ah162"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
+
+[node name="TextEdit2" type="TextEdit" parent="."]
+layout_mode = 0
+offset_left = 44.0
+offset_top = 21.0
+offset_right = 1152.0
+offset_bottom = 641.0
+text = "HELLO"
+wrap_mode = 1
+autowrap_mode = 1
+
+[node name="Balloon" parent="TextEdit2" instance=ExtResource("2_5dc4q")]
+
+[node name="Sprite2D" type="Sprite2D" parent="TextEdit2"]
+texture = ExtResource("4_u8o5s")
+script = ExtResource("5_2yexb")
+
+[node name="Control" type="Control" parent="TextEdit2"]
+anchors_preset = 0
+offset_left = 403.0
+offset_top = 145.0
+offset_right = 495.0
+offset_bottom = 227.0
+script = ExtResource("5_ah162")

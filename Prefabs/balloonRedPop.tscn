@@ -1,0 +1,121 @@
+[gd_scene load_steps=15 format=3 uid="uid://drrpdy0pdqoy5"]
+
+[ext_resource type="Script" path="res://Prefabs/balloonPop.gd" id="1_yoh4r"]
+[ext_resource type="Texture2D" uid="uid://cg8yr0oq8xejp" path="res://sprites/balloon_red.png" id="2_b0lk8"]
+[ext_resource type="Texture2D" uid="uid://djrauqkc4dvyc" path="res://sprites/balloon_yellow.png" id="3_wtik4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r3a0a"]
+atlas = ExtResource("2_b0lk8")
+region = Rect2(0, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sm8c4"]
+atlas = ExtResource("2_b0lk8")
+region = Rect2(16, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6siam"]
+atlas = ExtResource("2_b0lk8")
+region = Rect2(32, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cv10x"]
+atlas = ExtResource("3_wtik4")
+region = Rect2(0, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_il52d"]
+atlas = ExtResource("3_wtik4")
+region = Rect2(16, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vsofo"]
+atlas = ExtResource("3_wtik4")
+region = Rect2(32, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8ckge"]
+atlas = ExtResource("2_b0lk8")
+region = Rect2(0, 32, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_btp5n"]
+atlas = ExtResource("2_b0lk8")
+region = Rect2(16, 32, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fhmgo"]
+atlas = ExtResource("2_b0lk8")
+region = Rect2(32, 32, 16, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pvxno"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r3a0a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sm8c4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6siam")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cv10x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_il52d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vsofo")
+}],
+"loop": true,
+"name": &"default(yellow)",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8ckge")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_btp5n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fhmgo")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"pop",
+"speed": 30.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_r0b68"]
+radius = 9.0
+height = 34.0
+
+[node name="BalloonRed" type="Area2D"]
+position = Vector2(253, 169)
+collision_layer = 5
+collision_mask = 2
+script = ExtResource("1_yoh4r")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_pvxno")
+
+[node name="OuterCollision" type="CollisionShape2D" parent="."]
+position = Vector2(1, -26)
+scale = Vector2(6, 4)
+shape = SubResource("CapsuleShape2D_r0b68")
+
+[node name="Inner" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="InnerCollision" type="CollisionShape2D" parent="Inner"]
+position = Vector2(1, -26)
+scale = Vector2(3, 2)
+shape = SubResource("CapsuleShape2D_r0b68")
+
+[connection signal="area_entered" from="." to="." method="_on_outer_area_entered"]
+[connection signal="area_exited" from="." to="." method="_on_area_exited"]
+[connection signal="animation_finished" from="Sprite" to="." method="_on_sprite_animation_finished"]
+[connection signal="area_entered" from="Inner" to="." method="_on_inner_area_entered"]
