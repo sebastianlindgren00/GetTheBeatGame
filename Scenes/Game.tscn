@@ -168,11 +168,9 @@ script = SubResource("GDScript_mjukf")
 [node name="HandManager" type="Node" parent="."]
 script = ExtResource("1_ott3d")
 
-[node name="HandPointer" type="Node" parent="."]
-script = ExtResource("2_qi1tl")
-
-[node name="pointer" type="ColorRect" parent="HandPointer"]
+[node name="pointer" type="ColorRect" parent="."]
 offset_left = 524.0
 offset_top = 516.0
 offset_right = 580.0
 offset_bottom = 572.0
+script = ExtResource("2_qi1tl")
