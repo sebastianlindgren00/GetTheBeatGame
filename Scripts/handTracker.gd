@@ -13,10 +13,10 @@ func get_data():
 	
 #Use this data to copy the text-data in the landmarks into vectors and numbers to use in the game 
 func copy_to_vector(data: Dictionary): 
-	return Vector3(data.x, data.y, data.z)
+	return Vector2(data.x, data.y)
 	
 func base_vector(data: int): 
-	return Vector3(data, data, data)
+	return Vector2(data, data)
 
 func _ready():
 	for i in 21:

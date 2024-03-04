@@ -1,1 +1,3 @@
 res://Scenes/Game.tscn
+res://Scripts/handPointer.gd
+res://Scripts/handTracker.gd
