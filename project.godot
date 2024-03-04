@@ -11,9 +11,8 @@ config_version=5
 [application]
 
 config/name="tddd57_starter"
-run/main_scene="res://Scenes/Lab 3.tscn"
+run/main_scene="res://Scenes/Game.tscn"
 config/features=PackedStringArray("4.2")
-config/icon="res://icon.png"
 
 [physics]
 

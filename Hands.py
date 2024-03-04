@@ -29,7 +29,7 @@ class landmarker_and_result():
       options = mp.tasks.vision.HandLandmarkerOptions( 
          base_options = mp.tasks.BaseOptions(model_asset_path=os.path.join(path, "hand_landmarker.task")), # path to model
          running_mode = mp.tasks.vision.RunningMode.LIVE_STREAM, # running on a live stream
-         num_hands = 1, # track both hands
+         num_hands = 2, # track both hands
          min_hand_detection_confidence = 0.3, # lower than value to get predictions more often
          min_hand_presence_confidence = 0.3, # lower than value to get predictions more often
          min_tracking_confidence = 0.3, # lower than value to get predictions more often

@@ -1,0 +1,11 @@
+ea4bc82a6ad023ab7ee23ee620429895
+::res://::1709547406
+README.md::TextFile::-1::1709210576::0::1::::<><>::
+Sprite.gd::GDScript::-1::1709210577::0::1::::<>Sprite<>::
+::res://Prefabs/::1709546749
+::res://Scenes/::1709552673
+Game.tscn::PackedScene::4572237986350138151::1709552673::0::1::::<><>::res://Scripts/handTracker.gd
+handPointer.gd::GDScript::-1::1709553528::0::1::::<>ColorRect<>::
+::res://Scripts/::1709552673
+handTracker.gd::GDScript::-1::1709552673::0::1::::<>Control<>::
+::res://Sprites/::1709546762
