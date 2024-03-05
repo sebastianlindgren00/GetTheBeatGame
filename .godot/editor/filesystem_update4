@@ -2,3 +2,4 @@ res://Scripts/handPointer.gd
 res://Scenes/Game.tscn
 res://Scripts/handTracker.gd
 res://Scripts/spawnCircles.gd
+res://Scripts/ImportJSONData.gd
