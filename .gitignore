@@ -21,5 +21,6 @@ mono_crash.*.json
 # Custom
 *.tmp
 *.txt
+.vscode
 
 # End of https://www.toptal.com/developers/gitignore/api/godot
