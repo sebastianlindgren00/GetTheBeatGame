@@ -11,12 +11,12 @@ config_version=5
 [application]
 
 config/name="Beat the Game"
-run/main_scene="res://Scenes/Game.tscn"
+run/main_scene="res://Scenes/GameRoot.tscn"
 config/features=PackedStringArray("4.2")
 
 [autoload]
 
-ImportJsonData="*res://Scripts/ImportJSONData.gd"
+NotesImport="*res://Scripts/ImportJSONData.gd"
 
 [physics]
 

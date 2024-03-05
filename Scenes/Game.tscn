@@ -177,5 +177,5 @@ offset_right = 580.0
 offset_bottom = 572.0
 script = ExtResource("2_qi1tl")
 
-[node name="Node" type="Node" parent="."]
+[node name="CircleManager" type="Node" parent="."]
 script = ExtResource("3_ns0rp")
