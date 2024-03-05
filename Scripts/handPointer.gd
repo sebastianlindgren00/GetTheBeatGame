@@ -21,11 +21,14 @@ func _process(_delta):
 	if handOrientation[1] != "":
 		#print(handOrientation[1])
 		pass
+
+	print("Orientation", handOrientation[0], ", ", handOrientation[1] )
+	print("Hand1: ", hand1[0])
+	print("Hand2: ", hand2[0])
 	
-	# Get the dominant hand base and use it as pointer
-	#TODO: Add failsafe for when hand1 or hand2 is empty
-	if handOrientation[0] == DOMINANT_HAND:
-		self.position = hand1[0] * Vector2(VIEWPORT_X, VIEWPORT_Y)
+	# Get the dominant hand base and use it as pointer if two hands are used. Resort to the only hand if only one is used	
+	if handOrientation[0] == DOMINANT_HAND or hand2[0] == Vector2(0, 0):
+		self.position = hand1[0] * Vector2(VIEWPORT_X, VIEWPORT_Y) # Attach hand to square
 	else:
 		self.position = hand2[0] * Vector2(VIEWPORT_X, VIEWPORT_Y)
 	
@@ -42,52 +45,64 @@ func _process(_delta):
 # 		var fingerRot = basePos2D.angle_to_point(indexBasePos2D)
 # 		self.rotation = fingerRot + PI / 2;
 	
-# 	check_for_gesture(indexPointPos, indexBasePos, basePos)
+	check_for_gesture(hand1, hand2)
 	
 # 	# Reset to default sprite
 # 	if (!is_pinching&&!is_grabbing&&!is_patting):
 # 		gestureText.text = ""
 # 		_renderer.texture = defaultSprite
 		
-# func check_for_gesture(indexPointPos, indexBasePos, basePos):
-# 	# Look for pat
-# 	# Check the y-distance between point of index, base of index and base of hand
-# 	if abs(indexPointPos.y - indexBasePos.y) < pat_dist&&abs(indexBasePos.y - basePos.y) < pat_dist:
-# 		if !is_patting:
-# 			is_patting = true
-# 			gestureText.text = "PATTING"
-# 			is_grabbing = false
-# 			is_pinching = false
-# 			_renderer.texture = patSprite
-# 			if entered_balloon != null:
-# 				if entered_balloon.is_selected:
-# 					entered_balloon.unselect()
-# 				else:
-# 					entered_balloon.select()
-# 		return
-# 	else:
-# 		if is_patting: is_patting = false
+func check_for_gesture(hand1, hand2):
+	# 
+	# https://www.ida.liu.se/~TDDD57/labb.sv.shtml
+
+	# Look for snap
+	# Check the x-distance between point of thumb and point of middle finger
+	if abs(hand1[3].x - hand1[7].x) < snap_dist:
+		if !is_snapping:
+			is_snapping = true
+			gestureText.text = "SNAPPING"
+			_renderer.texture = snapSprite
+		return
+	else:
+		if is_snapping: is_snapping = false
+
+	# Look for clap
+
+	# Look for pat
+	# Check the y-distance between point of index, base of index and base of hand
+	if abs(indexPointPos.y - indexBasePos.y) < pat_dist&&abs(indexBasePos.y - basePos.y) < pat_dist:
+		if !is_patting:
+			is_patting = true
+			gestureText.text = "PATTING"
+			is_grabbing = false
+			is_pinching = false
+			
+		return
+	else:
+		if is_patting: is_patting = false
 	
-# 	# Look for grab
-# 	var middleDipPos = ControlScript.index11
-# 	# Check the distance between middle finger dip and hand base
-# 	if basePos.distance_to(middleDipPos) < grab_dist:
-# 		if !is_grabbing:
-# 			is_grabbing = true
-# 			gestureText.text = "GRABBING"
-# 			is_pinching = false
-# 			_renderer.texture = closedSprite
-# 		return
-# 	else:
-# 		if is_grabbing: is_grabbing = false
+	# Look for clap
+	var middleDipPos = ControlScript.index11
+	# Check the distance between middle finger dip and hand base
+	if basePos.distance_to(middleDipPos) < grab_dist:
+		if !is_grabbing:
+			is_grabbing = true
+			gestureText.text = "GRABBING"
+			is_pinching = false
+			_renderer.texture = closedSprite
+		return
+	else:
+		if is_grabbing: is_grabbing = false
 	
-# 	# Look for pinch
-# 	var thumbPointPos = ControlScript.index4
-# 	# Check the distance between point of thumb and point of index
-# 	if thumbPointPos.distance_to(indexPointPos) < pinch_dist&&!is_grabbing:
-# 		if !is_pinching:
-# 			is_pinching = true
-# 			gestureText.text = "PINCHING"
-# 			_renderer.texture = pinchSprite
-# 	else:
-# 		if is_pinching: is_pinching = false
+	# Look for pinch
+	var thumbPointPos = ControlScript.index4
+	# Check the distance between point of thumb and point of index
+	if thumbPointPos.distance_to(indexPointPos) < pinch_dist&&!is_grabbing:
+		if !is_pinching:
+			is_pinching = true
+			gestureText.text = "PINCHING"
+			_renderer.texture = pinchSprite
+	else:
+		if is_pinching: is_pinching = false
+

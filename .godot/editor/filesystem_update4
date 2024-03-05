@@ -1,4 +1,4 @@
-res://Scripts/handTracker.gd
-res://Scenes/Lab 3.tscn
-res://Scenes/Game.tscn
 res://Scripts/handPointer.gd
+res://Scenes/Game.tscn
+res://Scripts/handTracker.gd
+res://Scripts/spawnCircles.gd
