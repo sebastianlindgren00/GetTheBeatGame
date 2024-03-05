@@ -1,0 +1,12 @@
+[Song]
+{
+  Resolution = 192
+}
+[SyncTrack]
+{
+	0 = B 120
+}
+[EasySingle]
+{
+	0 = N 0 0
+}
