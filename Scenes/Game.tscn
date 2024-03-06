@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://b6e3dd6e6l1qx"]
+[gd_scene load_steps=6 format=3 uid="uid://b6e3dd6e6l1qx"]
 
 [ext_resource type="Script" path="res://Scripts/handTracker.gd" id="1_ott3d"]
 [ext_resource type="Script" path="res://Scripts/handPointer.gd" id="2_qi1tl"]
 [ext_resource type="Script" path="res://Scripts/spawnCircles.gd" id="3_ns0rp"]
+[ext_resource type="Script" path="res://Scenes/tapCircle.gd" id="4_2w6sx"]
 
 [sub_resource type="GDScript" id="GDScript_mjukf"]
 script/source = "extends Control
@@ -179,3 +180,6 @@ script = ExtResource("2_qi1tl")
 
 [node name="CircleManager" type="Node" parent="."]
 script = ExtResource("3_ns0rp")
+
+[node name="Node2D" type="Node2D" parent="CircleManager"]
+script = ExtResource("4_2w6sx")
