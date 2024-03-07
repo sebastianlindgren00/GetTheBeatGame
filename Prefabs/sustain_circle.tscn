@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://dhfnvtifu4842"]
+
+[ext_resource type="Script" path="res://Scripts/tapCircle.gd" id="1_klnep"]
+[ext_resource type="Script" path="res://Scenes/drawCircle.gd" id="2_uyfxp"]
+
+[node name="TapCircle" type="Node2D"]
+script = ExtResource("1_klnep")
+
+[node name="AnimCircle" type="Node2D" parent="."]
+script = ExtResource("2_uyfxp")

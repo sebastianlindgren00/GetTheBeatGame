@@ -1,7 +1,7 @@
 extends Node2D
 
 var maxRadius
-const COLOR = Color(1, 1, 1)
+var color
 
 func _draw():
-		draw_circle(Vector2(0, 0), maxRadius, COLOR)
+		draw_circle(Vector2(0, 0), maxRadius, color)
