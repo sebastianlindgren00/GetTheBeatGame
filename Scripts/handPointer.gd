@@ -13,12 +13,13 @@ var dominantLeftHand = false
 func _ready():
 	handManager = $"../HandManager"
 	handOrientation = handManager.orientation
-
+	# Set the origin position of the ColorRect to (0, 0)
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	var hand1 = handManager.hand1 # Contains all landmarks for hand 1
 	var hand2 = handManager.hand2 # Contains all landmarks for hand 2
-
+	#print (handOrientation)
 	if handOrientation[1] != "":
 		pass
 	
@@ -26,40 +27,28 @@ func _process(_delta):
 	if handOrientation[0] == DOMINANT_HAND or hand2[0] == Vector2(0, 0):
 		self.position = hand1[0] * Vector2(VIEWPORT_X, VIEWPORT_Y) # Attach hand to square
 		dominantRightHand = true
-		print("Dominant Right Hand")
+		#print("Dominant Right Hand")
 	else:
 		self.position = hand2[0] * Vector2(VIEWPORT_X, VIEWPORT_Y)
 		dominantLeftHand = true
-		print("Dominant Left Hand")
-	
-# 	# Local Rotation
-# 	var indexBasePos = ControlScript.index5 # Bottom of index finger
-# 	var basePos = ControlScript.index0 # Anchor point in hand
-# 	if is_patting:
-# 		self.rotation = 0 # No rotation for patting
-# 	# Angle between bottom of index finger and anchor point in hand.
-# 	# Creates a rotation for the pointer sprite
-# 	else:
-# 		var indexBasePos2D = Vector2(indexBasePos.x, indexBasePos.y)
-# 		var basePos2D = Vector2(basePos.x, basePos.y)
-# 		var fingerRot = basePos2D.angle_to_point(indexBasePos2D)
-# 		self.rotation = fingerRot + PI / 2;
-	
+		#print("Dominant Left Hand")
+	# Make a check to see if right hand or left hand is 
+	#print("Index point 4: ", hand1[4], " Index point 12: ", hand1[12])
 	check_for_gesture(hand1, hand2, dominantRightHand, dominantLeftHand)
 	
-# 	# Reset to default sprite
-# 	if (!is_pinching&&!is_grabbing&&!is_patting):
-# 		gestureText.text = ""
-# 		_renderer.texture = defaultSprite
+	# Reset to default sprite
+	# if (!is_snapping):
+	# 	gestureText.text = ""
+	# 	_renderer.texture = defaultSprite
 	
 func check_for_gesture(hand1, hand2, dominantRightHand, dominantLeftHand):
 # 	# https://www.ida.liu.se/~TDDD57/labb.sv.shtml
 	var snap_dist = 0.001
 	var is_snapping = false
 # 	# Look for snap
-	if dominantRightHand:
+	if handOrientation[0] == DOMINANT_HAND:
 		# Check the x-distance between point of thumb and point of middle finger
-		if abs(hand1[3].x - hand1[7].x) < snap_dist:
+		if abs(hand1[4].x - hand1[12].x) < snap_dist && hand1[4] != Vector2(0.402248, 0.69363) && hand1[12] != Vector2(0.383854, 0.707001):
 			if !is_snapping:
 				is_snapping = true
 				#gestureText.text = "SNAPPING"
@@ -68,9 +57,9 @@ func check_for_gesture(hand1, hand2, dominantRightHand, dominantLeftHand):
 			return
 		else:
 			if is_snapping: is_snapping = false
-	else:
 		# Check the x-distance between point of thumb and point of middle finger
-		if abs(hand2[3].x - hand2[7].x) < snap_dist:
+	else:
+		if abs(hand1[4].x - hand1[12].x) < snap_dist && hand1[4] != Vector2(0.402248, 0.69363) && hand1[12] != Vector2(0.383854, 0.707001):
 			if !is_snapping:
 				is_snapping = true
 				#gestureText.text = "SNAPPING"
@@ -79,31 +68,3 @@ func check_for_gesture(hand1, hand2, dominantRightHand, dominantLeftHand):
 			return
 		else:
 			if is_snapping: is_snapping = false
-
-# 	# Look for clap
-
-# 	# Look for pat
-# 	# Check the y-distance between point of index, base of index and base of hand
-# 	if abs(indexPointPos.y - indexBasePos.y) < pat_dist&&abs(indexBasePos.y - basePos.y) < pat_dist:
-# 		if !is_patting:
-# 			is_patting = true
-# 			gestureText.text = "PATTING"
-# 			is_grabbing = false
-# 			is_pinching = false
-			
-# 		return
-# 	else:
-# 		if is_patting: is_patting = false
-	
-# 	# Look for clap
-# 	var middleDipPos = ControlScript.index11
-# 	# Check the distance between middle finger dip and hand base
-# 	if basePos.distance_to(middleDipPos) < grab_dist:
-# 		if !is_grabbing:
-# 			is_grabbing = true
-# 			gestureText.text = "GRABBING"
-# 			is_pinching = false
-# 			_renderer.texture = closedSprite
-# 		return
-# 	else:
-# 		if is_grabbing: is_grabbing = false
