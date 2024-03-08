@@ -10,9 +10,11 @@ var currentRadius: float = 0 # Current radius of the circle
 var animCircle: Node2D # Reference to the child circle node
 var spawnTime: int = 0 # Time when the note was spawned
 var color: Color # Color of the circle
+var pointer
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	pointer = $"pointer" 
 	print("Note ready ", noteHitTimeout, " ms to hit!")
 	spawnTime = Time.get_ticks_msec()
 
@@ -43,3 +45,9 @@ func _process(_delta):
 	else:
 		currentRadius = MAX_RADIUS - MAX_RADIUS * (timeToHit / float(noteHitTimeout))
 		animCircle.scale = Vector2(currentRadius / MAX_RADIUS, currentRadius / MAX_RADIUS)
+
+	# See if snapping is active, 0.1second window untill circle is gone
+	# Using is_snapping from handpointer.gd
+	if pointer.is_snapping and timeToHit > -100:
+		queue_free()
+		print("Hit!")

@@ -15,7 +15,6 @@ var tapCirclePrefab = preload ("res://Prefabs/tap_circle.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-
 	# Load the notes from the file and add the note timestamps to the array
 	var songImport = NotesImport.noteFileData
 	notes = songImport["difficulties"]["Easy"]["Single"]
