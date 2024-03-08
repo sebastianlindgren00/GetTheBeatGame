@@ -26,9 +26,9 @@ func _process(_delta):
 	timeSpent = Time.get_ticks_msec()
 
 	# Print out the time spent each second
-	if timeSpent % 1000 <= NOTE_MARGIN:
-		print(float(timeSpent) / 1000)
-		print("Next key in notesArray: ", notesArray[noteIndex])
+	#if timeSpent % 1000 <= NOTE_MARGIN:
+		#print(float(timeSpent) / 1000)
+		#print("Next key in notesArray: ", notesArray[noteIndex])
 
 	# Clear all notes that are closer than 1 second to eachother
 	if noteIndex < len(notesArray) and notesArray[noteIndex] - timeSpent < -1000:
@@ -40,9 +40,9 @@ func _process(_delta):
 				var lane_data = note["lanes"][0]
 				var sustain_value = lane_data["sustain"]
 					# Handle sustain or tap hit based on sustain_value
-				if sustain_value != 0:
-					print(notesArray[noteIndex], " Sustain hit!")
-				else:
-					print(notesArray[noteIndex], " Tap Hit!")
+				#if sustain_value != 0:
+					#print(notesArray[noteIndex], " Sustain hit!")
+				#else:
+					#print(notesArray[noteIndex], " Tap Hit!")
 					
 			noteIndex += 1
