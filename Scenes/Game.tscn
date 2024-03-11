@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://b6e3dd6e6l1qx"]
+[gd_scene load_steps=6 format=3 uid="uid://b6e3dd6e6l1qx"]
 
 [ext_resource type="Script" path="res://Scripts/handTracker.gd" id="1_ott3d"]
 [ext_resource type="Script" path="res://Scripts/handPointer.gd" id="2_qi1tl"]
@@ -157,6 +157,8 @@ Data provided in the following format example:
 \"\"\"
 "
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i6070"]
+
 [node name="Game" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -169,13 +171,25 @@ script = SubResource("GDScript_mjukf")
 [node name="HandManager" type="Node" parent="."]
 script = ExtResource("1_ott3d")
 
-[node name="pointer" type="ColorRect" parent="."]
-layout_mode = 0
-offset_left = 524.0
-offset_top = 516.0
-offset_right = 580.0
-offset_bottom = 572.0
-script = ExtResource("2_qi1tl")
-
 [node name="CircleManager" type="Node" parent="."]
 script = ExtResource("3_ns0rp")
+
+[node name="Pointer" type="Area2D" parent="."]
+script = ExtResource("2_qi1tl")
+
+[node name="Rectangle" type="ColorRect" parent="Pointer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 46.0
+offset_bottom = 46.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.356293, 0.357277)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pointer"]
+shape = SubResource("RectangleShape2D_i6070")
