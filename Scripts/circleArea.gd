@@ -12,9 +12,9 @@ var color: Color # Color of the circle
 var pointer: Node2D # Reference to the pointer node
 
 var tapTexture = preload ("res://Icons/PinchedFingers.png")
-var sustainTexture = preload ("res://Icons/ClappingHands.png")
+var sustainTexture = preload ("res://Icons/RaisingHands.png")
 
-var noteType = "tap" # Type of the note, can be "tap" or "sustain"
+var noteType # Type of the note, can be "tap" or "sustain"
 var noteIsHit = false # If the note is hit or not
 var precision = 0 # Level of precision when hitting the note (timeToHit / noteHitTimeout)
 
@@ -27,6 +27,9 @@ func _ready():
 	# Generate a random color
 	color = Color(randf(), randf(), randf())
 
+	# Set the note type
+	noteType = get_parent().NOTE_TYPE
+
 	# Get child circle node to animate and set its radius
 	animCircle = $AnimCircle
 	animCircle.maxRadius = MAX_RADIUS
@@ -36,11 +39,11 @@ func _ready():
 	sprite.position = animCircle.position
 	sprite.scale = Vector2(0.3, 0.3)
 	
-	if noteType == "sustain":
-		sprite.texture = sustainTexture
-		
-	else:
-		sprite.texture = tapTexture
+	match noteType:
+		"sustain":
+			sprite.texture = sustainTexture
+		"tap":
+			sprite.texture = tapTexture
 	
 	add_child(sprite)
 
@@ -68,7 +71,6 @@ func scaleCircle(timeToHit):
 	else:
 		# Missed the note
 		queue_free()
-		print("Missed!")
 
 # Check if the note is hit by using the pointer
 func checkGesture(timeToHit):
@@ -82,8 +84,8 @@ func checkGesture(timeToHit):
 		"sustain":
 			if pointer.is_jazzing:
 				noteIsHit = true
-				if timeToHit > 0: precision = 1 - timeToHit / noteHitTimeout
-				noteHitTimeout = 0
+				precision = 1 - timeToHit / noteHitTimeout
+				queue_free()
 
 func _on_area_entered(area):
 	if area.name == "Pointer":

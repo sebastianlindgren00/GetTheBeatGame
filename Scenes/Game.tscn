@@ -178,32 +178,26 @@ script = ExtResource("1_ott3d")
 [node name="Pointer" type="Area2D" parent="."]
 script = ExtResource("2_qi1tl")
 
-[node name="Rectangle" type="ColorRect" parent="Pointer"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -10.0
-offset_top = -10.0
-offset_right = 46.0
-offset_bottom = 46.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.356293, 0.357277)
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pointer"]
 shape = SubResource("RectangleShape2D_i6070")
 
 [node name="CircleManager" type="Node" parent="."]
 script = ExtResource("3_ns0rp")
 
-[node name="PrecisionText" type="RichTextLabel" parent="."]
+[node name="ScoreText" type="RichTextLabel" parent="."]
 layout_mode = 0
 offset_left = 57.0
-offset_top = 16.0
-offset_right = 228.0
-offset_bottom = 56.0
+offset_top = 14.0
+offset_right = 229.0
+offset_bottom = 53.0
+text = "Score: 0"
+
+[node name="PrecisionText" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 58.0
+offset_top = 60.0
+offset_right = 229.0
+offset_bottom = 100.0
 text = "NICE!"
 
 [connection signal="child_exiting_tree" from="CircleManager" to="ScoreManager" method="_on_circle_manager_child_exiting_tree"]

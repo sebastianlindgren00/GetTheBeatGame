@@ -1,10 +1,11 @@
 [gd_scene load_steps=3 format=3 uid="uid://cjjkmf2gspgol"]
 
 [ext_resource type="PackedScene" uid="uid://b6e3dd6e6l1qx" path="res://Scenes/Game.tscn" id="1_qk3x8"]
-[ext_resource type="PackedScene" uid="uid://0tn8c8fyd7ti" path="res://Scenes/PlaySong.tscn" id="2_dgark"]
+[ext_resource type="PackedScene" path="res://Scenes/PlaySong.tscn" id="2_dgark"]
 
 [node name="GameRoot" type="Node"]
 
 [node name="Game" parent="." instance=ExtResource("1_qk3x8")]
 
 [node name="AudioStreamPlayer" parent="." instance=ExtResource("2_dgark")]
+volume_db = -6.559
