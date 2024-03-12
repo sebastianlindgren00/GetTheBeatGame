@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://b8kimp1l7xc1j"]
+[gd_scene load_steps=6 format=3 uid="uid://b8kimp1l7xc1j"]
 
 [ext_resource type="Script" path="res://Scripts/sustainCircle.gd" id="1_sliie"]
 [ext_resource type="Script" path="res://Scripts/circleArea.gd" id="2_qhr1f"]
 [ext_resource type="Script" path="res://Scripts/drawCircle.gd" id="3_4odpa"]
+[ext_resource type="Script" path="res://Scripts/jazzArea.gd" id="4_a8ixa"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_nuwof"]
 radius = 30.0
@@ -20,5 +21,15 @@ script = ExtResource("3_4odpa")
 scale = Vector2(1.69484, 1.67669)
 shape = SubResource("CircleShape2D_nuwof")
 
+[node name="jazzArea" type="Area2D" parent="."]
+script = ExtResource("4_a8ixa")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="jazzArea"]
+scale = Vector2(1.69484, 1.67669)
+shape = SubResource("CircleShape2D_nuwof")
+
 [connection signal="child_exiting_tree" from="." to="." method="_on_child_exiting_tree"]
 [connection signal="area_entered" from="circleArea" to="circleArea" method="_on_area_entered"]
+[connection signal="area_exited" from="circleArea" to="circleArea" method="_on_area_exited"]
+[connection signal="area_entered" from="jazzArea" to="jazzArea" method="_on_area_entered"]
+[connection signal="area_exited" from="jazzArea" to="jazzArea" method="_on_area_exited"]

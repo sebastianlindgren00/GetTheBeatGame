@@ -1,6 +1,7 @@
 extends Node2D
 
 const MAX_RADIUS = 50 # Max radius of the circle
+const JAZZ_TIMEOUT = 500 # Time the user are allowed to be outside the jazz area
 
 var circlePos # Position of the circle
 var noteHitTimeout: int = 500 # Timer in milliseconds to hit the note (set by spawner)
@@ -13,6 +14,8 @@ var pointer: Node2D # Reference to the pointer node
 var noteType = "tap" # Type of the note, can be "tap" or "sustain"
 var noteIsHit = false # If the note is hit or not
 var precision = 0 # Level of precision when hitting the note (timeToHit / noteHitTimeout)
+
+var jazzTimeoutCountdown = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -30,9 +33,17 @@ func _draw():
 	draw_circle(Vector2(0, 0), MAX_RADIUS, color * Color(1, 1, 1, 0.2))
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
+func _process(delta):
 	var timeToHit: float = noteHitTimeout - (Time.get_ticks_msec() - spawnTime)
 
+	if !noteIsHit:
+		if pointer != null: checkGesture(timeToHit)
+		scaleCircle(timeToHit)
+	else:
+		jazzTimeoutCountdown -= delta
+		if jazzTimeoutCountdown < 0: noteIsHit = false
+
+func scaleCircle(timeToHit):
 	# Give the player som extra time to hit the note
 	if timeToHit > - 100:
 		# Animate the circle to grow
@@ -43,20 +54,27 @@ func _process(_delta):
 		queue_free()
 		print("Missed!")
 
-	if pointer != null:
-		checkGesture(timeToHit)
-
 # Check if the note is hit by using the pointer
 func checkGesture(timeToHit):
 	# See if snapping is active, using is_snapping from handpointer.gd
-	if noteType == "tap":
-		if pointer.is_snapping:
-			noteIsHit = true
-			precision = 1 - timeToHit / noteHitTimeout
-			queue_free()
-	elif noteType == "sustain":
-		pass
+	match noteType:
+		"tap":
+			if pointer.is_snapping:
+				noteIsHit = true
+				precision = 1 - timeToHit / noteHitTimeout
+				queue_free()
+		"sustain":
+			if pointer.is_jazzing:
+				noteIsHit = true
+				if timeToHit > 0: precision = 1 - timeToHit / noteHitTimeout
+				noteHitTimeout = 0
 
 func _on_area_entered(area):
 	if area.name == "Pointer":
 		pointer = area
+
+func _on_area_exited(area):
+	if area.name == "Pointer":
+		pointer = null
+		if noteIsHit:
+			jazzTimeoutCountdown = JAZZ_TIMEOUT

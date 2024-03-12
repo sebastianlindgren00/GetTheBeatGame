@@ -46,6 +46,7 @@ func _process(_delta):
 					print(notesArray[noteIndex], " Sustain note!")
 					# Create a sustain circle
 					circ = sustainCirclePrefab.instantiate()
+					circ.sustainTime = sustain_value
 				else:
 					# Call tap note
 					print(notesArray[noteIndex], " Tap note!")
