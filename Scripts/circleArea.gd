@@ -10,6 +10,9 @@ var spawnTime: int = 0 # Time when the note was spawned
 var color: Color # Color of the circle
 var pointer: Node2D # Reference to the pointer node
 
+var tapTexture = preload("res://Icons/PinchedFingers.png")
+var sustainTexture = preload("res://Icons/ClappingHands.png")
+
 var noteType = "tap" # Type of the note, can be "tap" or "sustain"
 var noteIsHit = false # If the note is hit or not
 var precision = 0 # Level of precision when hitting the note (timeToHit / noteHitTimeout)
@@ -26,6 +29,19 @@ func _ready():
 	animCircle.maxRadius = MAX_RADIUS
 	animCircle.color = color
 
+	var sprite = Sprite2D.new()
+	sprite.position = animCircle.position
+	sprite.scale = Vector2(0.3, 0.3)
+	
+	if noteType == "sustain":
+		sprite.texture = sustainTexture
+		
+	else:
+		sprite.texture = tapTexture
+	
+	add_child(sprite)
+
+#draw() function for drawing the outer circle, gets called every frame
 func _draw():
 	draw_circle(Vector2(0, 0), MAX_RADIUS, color * Color(1, 1, 1, 0.2))
 
@@ -50,11 +66,24 @@ func _process(_delta):
 func checkGesture(timeToHit):
 	# See if snapping is active, using is_snapping from handpointer.gd
 	if noteType == "tap":
+		print("Checking tap gesture")
+		#load in the tap texture, got it to work HERE (below)
+		# var tapSprite = Sprite2D.new()
+		# tapSprite.position = animCircle.position
+		# tapSprite.texture = tapTexture
+		# tapSprite.scale = Vector2(0.3, 0.3)
+		#add_child(tapSprite)
 		if pointer.is_snapping:
 			noteIsHit = true
 			precision = 1 - timeToHit / noteHitTimeout
 			queue_free()
 	elif noteType == "sustain":
+		#create a sprite with the sustain texture at circle location.
+		# var sustainSprite = Sprite2D.new()
+		# sustainSprite.position = animCircle.position
+		# sustainSprite.texture = sustainTexture
+		# sustainSprite.scale = Vector2(0.3, 0.3)
+		# add_child(sustainSprite)
 		pass
 
 func _on_area_entered(area):
