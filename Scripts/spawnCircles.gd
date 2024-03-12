@@ -51,7 +51,7 @@ func _process(_delta):
 					# Call tap note
 					print(notesArray[noteIndex], " Tap note!")
 					# Create a tap circle
-					circ = sustainCirclePrefab.instantiate()
+					circ = tapCirclePrefab.instantiate()
 				circ.noteHitTimeout = NOTE_HIT_TIMEOUT
 				add_child(circ)
 					

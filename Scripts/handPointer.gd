@@ -73,7 +73,7 @@ func check_for_snap(hand1):
 			if is_snapping: is_snapping = false
 		# Check the x-distance between point of thumb and point of middle finger
 	else:
-		if abs(hand1[4].x - hand1[12].x) < snap_dist&&hand1[4] != Vector2(0.402248, 0.69363)&&hand1[12] != Vector2(0.383854, 0.707001):
+		if abs(hand1[4].x - hand1[12].x) < snap_dist && hand1[4] != Vector2(0.402248, 0.69363)&&hand1[12] != Vector2(0.383854, 0.707001):
 			if !is_snapping:
 				is_snapping = true
 				#gestureText.text = "SNAPPING"
@@ -89,14 +89,12 @@ func check_for_jazz(hand1, hand2):
 		if !is_jazzing: is_jazzing = true
 		return
 
-	var jazz_dist = 0.001
+	var jazz_dist = 0.15
 	is_jazzing = false
 
-	if abs(hand1[20].x - hand1[12].x) < jazz_dist&&hand1[4] != Vector2(0.402248, 0.69363)&&hand1[12] != Vector2(0.383854, 0.707001):
+	if abs(hand1[4].x - hand2[4].x) < jazz_dist && hand1[4] != Vector2(0.402248, 0.69363)&&hand1[12] != Vector2(0.383854, 0.707001):
 		if !is_jazzing:
 			is_jazzing = true
-			#gestureText.text = "SNAPPING"
-			#_renderer.texture = snapSprite
 			print("JAZZ HAND")
 		return
 	else:
