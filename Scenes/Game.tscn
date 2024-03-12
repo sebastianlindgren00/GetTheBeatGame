@@ -1,5 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://b6e3dd6e6l1qx"]
+[gd_scene load_steps=7 format=3 uid="uid://b6e3dd6e6l1qx"]
 
+[ext_resource type="Script" path="res://Scripts/ScoreManager.gd" id="1_n36du"]
 [ext_resource type="Script" path="res://Scripts/handTracker.gd" id="1_ott3d"]
 [ext_resource type="Script" path="res://Scripts/handPointer.gd" id="2_qi1tl"]
 [ext_resource type="Script" path="res://Scripts/spawnCircles.gd" id="3_ns0rp"]
@@ -168,11 +169,11 @@ grow_horizontal = 2
 grow_vertical = 2
 script = SubResource("GDScript_mjukf")
 
+[node name="ScoreManager" type="Node" parent="."]
+script = ExtResource("1_n36du")
+
 [node name="HandManager" type="Node" parent="."]
 script = ExtResource("1_ott3d")
-
-[node name="CircleManager" type="Node" parent="."]
-script = ExtResource("3_ns0rp")
 
 [node name="Pointer" type="Area2D" parent="."]
 script = ExtResource("2_qi1tl")
@@ -193,3 +194,16 @@ scale = Vector2(0.356293, 0.357277)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pointer"]
 shape = SubResource("RectangleShape2D_i6070")
+
+[node name="CircleManager" type="Node" parent="."]
+script = ExtResource("3_ns0rp")
+
+[node name="PrecisionText" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 57.0
+offset_top = 16.0
+offset_right = 228.0
+offset_bottom = 56.0
+text = "NICE!"
+
+[connection signal="child_exiting_tree" from="CircleManager" to="ScoreManager" method="_on_circle_manager_child_exiting_tree"]

@@ -20,4 +20,5 @@ script = ExtResource("3_rfyib")
 scale = Vector2(1.69484, 1.67669)
 shape = SubResource("CircleShape2D_nuwof")
 
+[connection signal="child_exiting_tree" from="." to="." method="_on_child_exiting_tree"]
 [connection signal="area_entered" from="circleArea" to="circleArea" method="_on_area_entered"]

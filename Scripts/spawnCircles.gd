@@ -1,7 +1,7 @@
 extends Node
 
 const NOTE_MARGIN = 100 # Margin used to make sure the note is found (in ms)
-const NOTE_HIT_TIMEOUT = 3000 # Time in ms to hit the note from the time it appears
+const NOTE_HIT_TIMEOUT = 4000 # Time in ms to hit the note from the time it appears
 
 var timeSpent = 0;
 var notes = []
@@ -12,6 +12,8 @@ var sustainArray = []
 var sustainIndex = 0
 
 var tapCirclePrefab = preload ("res://Prefabs/tap_circle.tscn")
+var sustainCirclePrefab = preload ("res://Prefabs/sustain_circle.tscn")
+var precisionTextNode # Text node to display precision level
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -28,12 +30,6 @@ func _ready():
 func _process(_delta):
 	timeSpent = Time.get_ticks_msec()
 
-	# Print out the time spent each second
-	if timeSpent % 1000 <= NOTE_MARGIN:
-		# print(float(timeSpent) / 1000)
-		# print("Next key in notesArray: ", notesArray[noteIndex])
-		pass
-
 	# Clear all notes that are closer than 1 second to eachother
 	if noteIndex < len(notesArray) and notesArray[noteIndex] - timeSpent < - 1000:
 		# Check if the note is in the time range
@@ -43,16 +39,19 @@ func _process(_delta):
 			if note["lanes"].size() > 0:
 				var lane_data = note["lanes"][0]
 				var sustain_value = lane_data["sustain"]
-					# Handle sustain or tap hit based on sustain_value
+				# Handle sustain or tap hit based on sustain_value
+				var circ
 				if sustain_value != 0:
 					# Call sustain note
 					print(notesArray[noteIndex], " Sustain note!")
+					# Create a sustain circle
+					circ = sustainCirclePrefab.instantiate()
 				else:
 					# Call tap note
 					print(notesArray[noteIndex], " Tap note!")
 					# Create a tap circle
-					var circ = tapCirclePrefab.instantiate()
-					circ.noteHitTimeout = NOTE_HIT_TIMEOUT
-					add_child(circ)
+					circ = sustainCirclePrefab.instantiate()
+				circ.noteHitTimeout = NOTE_HIT_TIMEOUT
+				add_child(circ)
 					
 			noteIndex += 1

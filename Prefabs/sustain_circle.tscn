@@ -1,10 +1,24 @@
-[gd_scene load_steps=3 format=3 uid="uid://dhfnvtifu4842"]
+[gd_scene load_steps=5 format=3 uid="uid://b8kimp1l7xc1j"]
 
-[ext_resource type="Script" path="res://Scripts/tapCircle.gd" id="1_klnep"]
-[ext_resource type="Script" path="res://Scenes/drawCircle.gd" id="2_uyfxp"]
+[ext_resource type="Script" path="res://Scripts/sustainCircle.gd" id="1_sliie"]
+[ext_resource type="Script" path="res://Scripts/circleArea.gd" id="2_qhr1f"]
+[ext_resource type="Script" path="res://Scripts/drawCircle.gd" id="3_4odpa"]
 
-[node name="TapCircle" type="Node2D"]
-script = ExtResource("1_klnep")
+[sub_resource type="CircleShape2D" id="CircleShape2D_nuwof"]
+radius = 30.0
 
-[node name="AnimCircle" type="Node2D" parent="."]
-script = ExtResource("2_uyfxp")
+[node name="SustainCircle" type="Node2D"]
+script = ExtResource("1_sliie")
+
+[node name="circleArea" type="Area2D" parent="."]
+script = ExtResource("2_qhr1f")
+
+[node name="AnimCircle" type="Node2D" parent="circleArea"]
+script = ExtResource("3_4odpa")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="circleArea"]
+scale = Vector2(1.69484, 1.67669)
+shape = SubResource("CircleShape2D_nuwof")
+
+[connection signal="child_exiting_tree" from="." to="." method="_on_child_exiting_tree"]
+[connection signal="area_entered" from="circleArea" to="circleArea" method="_on_area_entered"]

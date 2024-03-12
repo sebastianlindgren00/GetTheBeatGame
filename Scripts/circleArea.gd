@@ -11,11 +11,11 @@ var color: Color # Color of the circle
 var pointer: Node2D # Reference to the pointer node
 
 var noteType = "tap" # Type of the note, can be "tap" or "sustain"
+var noteIsHit = false # If the note is hit or not
+var precision = 0 # Level of precision when hitting the note (timeToHit / noteHitTimeout)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pointer = $"pointer"
-	print("Note ready ", noteHitTimeout, " ms to hit!")
 	spawnTime = Time.get_ticks_msec()
 
 	# Generate a random color
@@ -32,18 +32,30 @@ func _draw():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	var timeToHit: float = noteHitTimeout - (Time.get_ticks_msec() - spawnTime)
-	if timeToHit < 0:
-		queue_free()
-		print("Missed!")
-	else:
+
+	# Give the player som extra time to hit the note
+	if timeToHit > - 100:
+		# Animate the circle to grow
 		currentRadius = MAX_RADIUS - MAX_RADIUS * (timeToHit / float(noteHitTimeout))
 		animCircle.scale = Vector2(currentRadius / MAX_RADIUS, currentRadius / MAX_RADIUS)
-
-	# See if snapping is active, 0.1second window untill circle is gone
-	# Using is_snapping from handpointer.gd
-	if pointer != null and pointer.is_snapping and timeToHit > - 100:
+	else:
+		# Missed the note
 		queue_free()
-		print("Hit!")
+		print("Missed!")
+
+	if pointer != null:
+		checkGesture(timeToHit)
+
+# Check if the note is hit by using the pointer
+func checkGesture(timeToHit):
+	# See if snapping is active, using is_snapping from handpointer.gd
+	if noteType == "tap":
+		if pointer.is_snapping:
+			noteIsHit = true
+			precision = 1 - timeToHit / noteHitTimeout
+			queue_free()
+	elif noteType == "sustain":
+		pass
 
 func _on_area_entered(area):
 	if area.name == "Pointer":
